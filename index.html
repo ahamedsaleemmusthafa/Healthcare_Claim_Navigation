@@ -31,7 +31,7 @@
 
         .banner-title-container {
             display: inline-block;
-            max-width: 60%;
+            max-width: 50%;
         }
 
         #suite-title {
@@ -112,7 +112,7 @@
             height: auto; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             background: #fff;
-	    margin-top: 0.5mm; /* <-- ADD THIS LINE to shift the image 2mm up */
+            margin-top: 0px; 
         }
 
         /* Right Side Quiz Interface Panel - Explicitly 30% Width */
@@ -272,6 +272,7 @@
         <div class="app-switcher-bar">
             <button id="mode-hcfa-btn" class="switch-btn active-mode">HCFA-1500</button>
             <button id="mode-ub-btn" class="switch-btn">UB-04</button>
+            <button id="mode-dental-btn" class="switch-btn">Dental-7</button>
         </div>
     </div>
 
@@ -279,7 +280,7 @@
         <div class="form-container">
             <img src="HCFA.jpg" usemap="#image-map" id="form-image" alt="Healthcare Claims Form Matrix">
             <map name="image-map" id="dynamic-image-map">
-                </map>
+            </map>
         </div>
 
         <div class="dashboard-panel">
@@ -536,6 +537,82 @@
                     { alt: "81D. Taxonomy Code 1", coords: "1114,3976,1495,4037" },
                     { alt: "81D. Taxonomy Code 2", coords: "1495,3976,1950,4035" }
                 ]
+            },
+            dental: {
+                title: "Dental-7 Field Locator & Navigation Suite",
+                imageSrc: "Dental-7.jpg",
+                nativeWidth: 1700,  // Customized to match your asset limits
+                nativeHeight: 2200, // Customized to match your asset limits
+                borderWidth: "3px",
+                maxFields: 57,
+                areas: [
+                    { alt: "Box 1 Header Information", coords: "88,82,828,187" },
+                    { alt: "Box 2 Predetermination/Preauthorization Number", coords: "88,189,823,238" },
+                    { alt: "Box 3 Dental Benefit Plan Information", coords: "93,271,824,423" },
+                    { alt: "Box 3a Payer ID", coords: "92,426,824,463" },
+                    { alt: "Box 4 Other Coverage", coords: "92,494,824,522" },
+                    { alt: "Box 5 Name of Policyholder/Subscriber", coords: "94,524,828,579" },
+                    { alt: "Box 6 Other Insured Date of Birth", coords: "94,582,352,636" },
+                    { alt: "Box 7 Other Insured Gender", coords: "356,582,488,636" },
+                    { alt: "Box 8 Other Insured Policy holder/Subscriber", coords: "493,582,827,637" },
+                    { alt: "Box 9 Other Insured Plan/Group Number", coords: "96,638,351,688" },
+                    { alt: "Box 10 Patient's Relationship to Person name In #5", coords: "363,642,821,691" },
+                    { alt: "Box 11 Other Insured Company/Dental Benefit Plan", coords: "99,701,828,814" },
+                    { alt: "Box 11a Other Payer ID", coords: "96,814,828,851" },
+                    { alt: "Box 12 Policyholder/Subscriber Name", coords: "834,252,1551,406" },
+                    { alt: "Box 13 Insured Date of Birth", coords: "835,414,1081,469" },
+                    { alt: "Box 14 Insured Gender", coords: "1087,414,1225,467" },
+                    { alt: "Box 15 Policyholder/subscriber Id", coords: "1230,413,1559,468" },
+                    { alt: "Box 16 Insured Plan/Group Number", coords: "834,477,1069,532" },
+                    { alt: "Box 17 Employer Name", coords: "1079,481,1567,538" },
+                    { alt: "Box 18 Relationship to Policyholder/subscriber in #12", coords: "829,566,1351,627" },
+                    { alt: "Box 20 Patient Name", coords: "833,629,1566,787" },
+                    { alt: "Box 21 Patient Date of Birth", coords: "835,788,1082,847" },
+                    { alt: "Box 22 Patient Gender", coords: "1097,790,1220,850" },
+                    { alt: "Box 23 Patient ID/Account#", coords: "1239,787,1566,846" },
+                    { alt: "Box 24 Procedure Date", coords: "100,917,310,1251" },
+                    { alt: "Box 25 Area of Oral Cavity", coords: "316,932,374,1247" },
+                    { alt: "Box 26 Tooth System", coords: "372,930,427,1250" },
+                    { alt: "Box 27 Tooth Number(s) or Letter(s)", coords: "432,934,644,1251" },
+                    { alt: "Box 28 Tooth Surface", coords: "644,938,743,1253" },
+                    { alt: "Box 29 Procedure Code", coords: "751,934,861,1250" },
+                    { alt: "Box 29a Diag. Pointer", coords: "861,938,949,1253" },
+                    { alt: "Box 29b Qty", coords: "955,936,1002,1253" },
+                    { alt: "Box 30  Description", coords: "1004,940,1444,1255" },
+                    { alt: "Box 31 Fee", coords: "1448,942,1569,1255" },
+                    { alt: "Box 31a Other Fee(s)", coords: "1342,1262,1571,1314" },
+                    { alt: "Box 32 Total Fee", coords: "1332,1322,1572,1352" },
+                    { alt: "Box 33 Missing Teeth Information", coords: "100,1258,716,1349" },
+                    { alt: "Box 34 Diagnosis Code List Qualifier", coords: "720,1258,1188,1279" },
+                    { alt: "Box 34a Diagnosis Code(s)", coords: "720,1288,1332,1353" },
+                    { alt: "Box 35 Remarks", coords: "102,1354,1572,1397" },
+                    { alt: "Box 36 Patient/Guardian Signature", coords: "102,1532,809,1594" },
+                    { alt: "Box 37 Subscriber Signature", coords: "105,1647,808,1704" },
+                    { alt: "Box 38 Place of Treatment", coords: "818,1430,1258,1490" },
+                    { alt: "Box 39 Enclosures (Y or N)", coords: "1264,1432,1570,1458" },
+                    { alt: "Box 40 Is Treatment of Orthodontics", coords: "822,1497,1240,1550" },
+                    { alt: "Box 41 Date Appliance Placed", coords: "1262,1492,1571,1557" },
+                    { alt: "Box 42 Months of Treatment", coords: "819,1553,1014,1613" },
+                    { alt: "Box 43 Replacement of Prosthesis", coords: "1023,1558,1255,1616" },
+                    { alt: "Box 44 Date of Prior Placement", coords: "1265,1564,1575,1617" },
+                    { alt: "Box 45 Treatment Resulting From", coords: "820,1619,1568,1671" },
+                    { alt: "Box 46 Date of Accident", coords: "820,1677,1331,1702" },
+                    { alt: "Box 47 Auto Accident State", coords: "1338,1678,1572,1703" },
+                    { alt: "Box 48 Billing Dentist Organization Name", coords: "112,1774,817,1932" },
+                    { alt: "Box 49 Billing Dentist NPI", coords: "113,1938,343,1992" },
+                    { alt: "Box 50 Billing Dentist License Number", coords: "349,1944,577,1993" },
+                    { alt: "Box 51 Billing Dentist SSN or TIN", coords: "583,1939,818,1995" },
+                    { alt: "Box 52 Billing Dentist Phone Number", coords: "109,1999,489,2038" },
+                    { alt: "Box 52a Billing Dentist Additional Provider ID", coords: "495,1995,816,2040" },
+                    { alt: "Box 53 Treating Dentist Name", coords: "827,1754,1577,1828" },
+                    { alt: "Box 53a Locum Tenens Treating  Dentist", coords: "825,1828,1583,1859" },
+                    { alt: "Box 54 Treating Dentist NPI", coords: "824,1858,1197,1891" },
+                    { alt: "Box 55 Treating Dentist License", coords: "1205,1861,1572,1896" },
+                    { alt: "Box 56 Treating Dentist Address", coords: "826,1932,1574,1995" },
+                    { alt: "Box 56a Treating Dentist Speciality Code", coords: "1198,1896,1572,1934" },
+                    { alt: "Box 57 Treating Dentist Phone Number", coords: "833,1999,1197,2043" },
+                    { alt: "Box 58 Additional Provider Id", coords: "1205,2000,1575,2043" }
+                ]
             }
         };
 
@@ -622,7 +699,13 @@
             const profile = mapDataProfiles[modeKey];
 
             suiteTitle.textContent = profile.title;
-            formImage.src = profile.imageSrc;
+            
+            // Set dynamic properties relative to layout constraints
+            if (modeKey === 'dental') {
+                formImage.src = "Dental-7.jpg";
+            } else {
+                formImage.src = profile.imageSrc;
+            }
 
             inputQuestions.max = profile.maxFields;
             if (parseInt(inputQuestions.value) > profile.maxFields) {
@@ -902,20 +985,31 @@
         // --- App Switcher Event Handlers ---
         const hcfaModeBtn = document.getElementById('mode-hcfa-btn');
         const ubModeBtn = document.getElementById('mode-ub-btn');
+        const dentalModeBtn = document.getElementById('mode-dental-btn');
+
+        function updateActiveButton(activeBtn) {
+            [hcfaModeBtn, ubModeBtn, dentalModeBtn].forEach(btn => btn.classList.remove('active-mode'));
+            activeBtn.classList.add('active-mode');
+        }
 
         hcfaModeBtn.addEventListener('click', () => {
             if (activeMode !== 'hcfa') {
-                hcfaModeBtn.classList.add('active-mode');
-                ubModeBtn.classList.remove('active-mode');
+                updateActiveButton(hcfaModeBtn);
                 applyAppMode('hcfa');
             }
         });
 
         ubModeBtn.addEventListener('click', () => {
             if (activeMode !== 'ub') {
-                ubModeBtn.classList.add('active-mode');
-                hcfaModeBtn.classList.remove('active-mode');
+                updateActiveButton(ubModeBtn);
                 applyAppMode('ub');
+            }
+        });
+
+        dentalModeBtn.addEventListener('click', () => {
+            if (activeMode !== 'dental') {
+                updateActiveButton(dentalModeBtn);
+                applyAppMode('dental');
             }
         });
 
