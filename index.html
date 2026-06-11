@@ -541,8 +541,8 @@
             dental: {
                 title: "Dental-7 Field Locator & Navigation Suite",
                 imageSrc: "Dental-7.jpg",
-                nativeWidth: 1700,  // Customized to match your asset limits
-                nativeHeight: 2200, // Customized to match your asset limits
+                nativeWidth: 1700,  
+                nativeHeight: 2200, 
                 borderWidth: "3px",
                 maxFields: 57,
                 areas: [
@@ -851,7 +851,13 @@
             maxAttempts = isNaN(qInput) ? 10 : Math.min(Math.max(qInput, 1), boxNames.length);
             timePerQuestion = isNaN(tInput) ? 15 : Math.min(Math.max(tInput, 3), 60);
 
-            quizPool = [...boxNames].sort(() => Math.random() - 0.5).slice(0, maxAttempts);
+            // True Fisher-Yates Random Shuffling Engine Implementation to eliminate repeats
+            let shuffledPool = [...boxNames];
+            for (let i = shuffledPool.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledPool[i], shuffledPool[j]] = [shuffledPool[j], shuffledPool[i]];
+            }
+            quizPool = shuffledPool.slice(0, maxAttempts);
             
             setupScreen.classList.remove('active');
             gameScreen.classList.add('active');
