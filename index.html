@@ -23,7 +23,7 @@
             background-color: #2c3e50;
             color: #ffffff;
             padding: 20px;
-            position: relative; /* Context for nested absolute positioning */
+            position: relative;
             text-align: center;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
             z-index: 10;
@@ -48,6 +48,14 @@
             margin-top: 5px;
             display: block;
             letter-spacing: 1px;
+        }
+
+        #user-display {
+            font-size: 13px;
+            color: #2ecc71;
+            font-weight: bold;
+            margin-top: 4px;
+            display: block;
         }
 
         /* Relocated Application Switcher Container */
@@ -259,14 +267,64 @@
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Modal Overlay Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-align: left;
+        }
+
+        .modal-card h2 {
+            margin-top: 0;
+            font-size: 22px;
+            color: #2c3e50;
+            border-bottom: 2px solid #eceff1;
+            padding-bottom: 10px;
+        }
     </style>
 </head>
 <body>
+
+    <!-- User Login Modal -->
+    <div id="user-modal" class="modal-overlay">
+        <div class="modal-card">
+            <h2>👤 Welcome to Field Locator</h2>
+            <p style="color: #64748b; font-size: 14px; margin-top: -5px; margin-bottom: 15px;">Please provide your details before accessing the portal.</p>
+            <div class="form-group">
+                <label for="modal-username">Your Name <span style="color:#e74c3c;">*</span></label>
+                <input type="text" id="modal-username" placeholder="Enter your full name" autofocus required>
+            </div>
+            <div class="form-group">
+                <label for="modal-location">Location <span style="color:#e74c3c;">*</span></label>
+                <input type="text" id="modal-location" placeholder="e.g. Madurai, Chennai, New York" required>
+            </div>
+            <button id="modal-submit-btn" class="btn" style="margin-top: 10px;">Enter Portal</button>
+        </div>
+    </div>
 
     <div class="top-banner">
         <div class="banner-title-container">
             <span id="suite-title">HCFA Field Locator & Navigation Suite</span>
             <span class="banner-subtitle">Created by Saleem</span>
+            <span id="user-display"></span>
         </div>
         
         <div class="app-switcher-bar">
@@ -329,6 +387,78 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function () {
+
+        // --- Apps Script Webhook Endpoint ---
+        const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbxp35LyBTvGkFPRqO6OdVTsMjkY2dNkGss9KwIBu30gXaIwVJjKe6lHtQ0ryPYrkjjb/exec";
+
+        // Current User Object
+        let currentUser = {
+            name: '',
+            location: ''
+        };
+
+        // Utility to send data to the Google Sheet
+        function sendToGoogleSheet(payload) {
+            fetch(GOOGLE_SHEET_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(err => console.error("Sheet Logging Error:", err));
+        }
+
+        // --- User Modal Logic ---
+        const userModal = document.getElementById('user-modal');
+        const modalUsername = document.getElementById('modal-username');
+        const modalLocation = document.getElementById('modal-location');
+        const modalSubmitBtn = document.getElementById('modal-submit-btn');
+        const userDisplay = document.getElementById('user-display');
+
+        function handleUserEntry() {
+            const name = modalUsername.value.trim();
+            const location = modalLocation.value.trim();
+
+            if (!name) {
+                alert("Please enter your name.");
+                modalUsername.focus();
+                return;
+            }
+
+            if (!location) {
+                alert("Please enter your location.");
+                modalLocation.focus();
+                return;
+            }
+
+            currentUser.name = name;
+            currentUser.location = location;
+
+            // Update top bar with user name and location
+            userDisplay.textContent = `👤 ${currentUser.name} | 📍 ${currentUser.location}`;
+
+            // Log access immediately to Google Sheet (Column C receives location)
+            sendToGoogleSheet({
+                timestamp: new Date().toLocaleString(),
+                userName: currentUser.name,
+                location: currentUser.location,
+                mode: "Logged In",
+                score: "-",
+                total: "-",
+                percentage: "-",
+                elapsedSeconds: "-"
+            });
+
+            // Hide Modal
+            userModal.style.display = 'none';
+        }
+
+        modalSubmitBtn.addEventListener('click', handleUserEntry);
+        modalUsername.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') handleUserEntry();
+        });
+        modalLocation.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') handleUserEntry();
+        });
         
         // --- Form Native Specification Profiles ---
         const mapDataProfiles = {
@@ -756,7 +886,7 @@
                     gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.12);
                     osc.start(); osc.stop(audioCtx.currentTime + 0.12);
                 } else {
-                    osc.frequency.setValueAtTime(220.00, audioCtx.currentTime); 
+                    osc.frequency.setValueAtTime(220.00, audioCtx.currentTime);  
                     osc.frequency.linearRampToValueAtTime(130.81, audioCtx.currentTime + 0.18); 
                     gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
                     gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.22);
@@ -799,7 +929,7 @@
             boxNames = [];
 
             profile.areas.forEach(area => {
-                const cleanedBoxName = area.alt.replace(/&amp;/g, '&');
+                const cleanedBoxName = area.alt.replace(/&/g, '&');
                 boxNames.push(cleanedBoxName);
 
                 const areaEl = document.createElement('area');
@@ -934,7 +1064,6 @@
             maxAttempts = isNaN(qInput) ? 10 : Math.min(Math.max(qInput, 1), boxNames.length);
             timePerQuestion = isNaN(tInput) ? 15 : Math.min(Math.max(tInput, 3), 60);
 
-            // True Fisher-Yates Random Shuffling Engine Implementation to eliminate repeats
             let shuffledPool = [...boxNames];
             for (let i = shuffledPool.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -1032,6 +1161,18 @@
 
             const elapsedTotal = ((Date.now() - startTime) / 1000).toFixed(1);
             const finalPercentage = ((score / maxAttempts) * 100).toFixed(1);
+
+            // Send full performance metrics to Google Sheet (includes user's location)
+            sendToGoogleSheet({
+                timestamp: new Date().toLocaleString(),
+                userName: currentUser.name,
+                location: currentUser.location,
+                mode: mapDataProfiles[activeMode].title,
+                score: score,
+                total: maxAttempts,
+                percentage: `${finalPercentage}%`,
+                elapsedSeconds: elapsedTotal
+            });
 
             let wrongSummaryHtml = "<h3 style='color:#e74c3c; margin-top:25px;'>❌ Areas For Review:</h3><ul class='bordered-list'>";
             wrongClicks.forEach((item, index) => {
